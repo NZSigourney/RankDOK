@@ -42,6 +42,6 @@ class RankString extends Command
             Server::getInstance()->getLogger()->alert($this->getMain()->getMotd() . " Use in-game!");
             return true;
         }
-        new UIform($player);
+        new UIform($sender);
     }
 }
