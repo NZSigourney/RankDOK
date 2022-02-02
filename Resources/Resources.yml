@@ -1,0 +1,55 @@
+# Content Configuration Rank Dynasty Of Kings's System
+
+# Title
+
+title.UI: §l§f[§r§aRankDOK's §cSystem§l§f]
+title.UI.Coin: §l§f[§r§aCoin (D-Coin) §bPayment§l§f]
+title.UI.Money: §l§f[§r§aMoney (D-Money) §bPayment§l§f]
+
+# Content
+
+Content.Coin: §aFeature §r» \n §cPrice »
+Content.Money: §aFeature §r» \n §cPrice »
+
+# Button
+
+Button.exit: Back
+Button.Bought: §a§lMua Rank
+Button.Feature: §l§aTính Năng
+
+Button.Coin: §l§aMua Bằng §cCoin (D-Coin)
+Button.Money: §l§aMua Bằng §6Money (D-Money)
+
+# Cost (Money)
+
+Cost.Money.Rank.Civilian: 50
+Cost.Money.Rank.Soldiers: 50
+Cost.Money.Rank.LandLords: 50
+Cost.Money.Rank.Warden: 50
+Cost.Money.Rank.Captain: 50
+Cost.Money.Rank.General: 50
+
+# Cost (Coin)
+
+Cost.Coin.Rank.Civilian: 50
+Cost.Coin.Rank.Soldiers: 50
+Cost.Coin.Rank.LandLords: 50
+Cost.Coin.Rank.Warden: 50
+Cost.Coin.Rank.Captain: 50
+Cost.Coin.Rank.General: 50
+
+# Invalid Message
+Invalid.Message: You do not enought D-Money or D-Coin For Upgrade Your Rank
+
+# Image URL
+
+URL.IMAGE.EXIT: https://cdn4.iconfinder.com/data/icons/navigation-40/24/exit-128.png
+URL.IMAGE.COINBUY: https://cdn2.iconfinder.com/data/icons/30px-bank/30/17_money-coin-cash-deposit-payment-128.png
+URL.IMAGE.MONEYBUY: https://cdn4.iconfinder.com/data/icons/symbol-blue-set-1/100/Untitled-2-87-128.png
+
+URL.IMAGE.RANK.1: https://cdn2.iconfinder.com/data/icons/avatars-2-7/128/6-128.png
+URL.IMAGE.RANK.2: https://cdn0.iconfinder.com/data/icons/vietnam/512/vietnam-travel-03-128.png
+URL.IMAGE.RANK.3: https://cdn2.iconfinder.com/data/icons/avatars-2-7/128/11-128.png
+URL.IMAGE.RANK.4: https://cdn3.iconfinder.com/data/icons/various-jobs-occupations-career/254/occupation-21-015-128.png
+URL.IMAGE.RANK.5: https://cdn3.iconfinder.com/data/icons/pirate-flat/340/sailor_sea_captain_navy_seaman_hat_adventure_vintage-128.png
+URL.IMAGE.RANK.6: https://cdn0.iconfinder.com/data/icons/types-of-soldiers/251/type-of-solder-010-128.png

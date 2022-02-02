@@ -1,0 +1,12 @@
+name: RankDOK
+version: 1.0-BETA
+main: NZS\DOK\Main
+api: 3.27.0
+author: NZS
+softdepend:
+  - PointAPI
+  - EconomyAPI
+  - PurePerms
+  - FormAPI
+depend:
+  - FormAPI
