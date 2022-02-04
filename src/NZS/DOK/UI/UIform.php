@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection ALL */
 
 declare(strict_types=1);
 
@@ -34,11 +34,14 @@ class UIform
     public function formOpen(Player $player): void
     {
         $a = Server::getInstance()->getPluginManager()->getPlugin("FormAPI");
-        $f = $a->createSimpleForm(Function (Player $player, ?array $data = null){
+        $f = $a->createSimpleForm(Function (Player $player, $data){
             $r = $data;
+            if ($r == null) {
+                //Command
+            }
             switch($r){
                 case 0:
-                    $this->formOpen($player);
+                    // Commands
                     break;
                 case 1:
                     $this->boughtRank($player);

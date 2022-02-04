@@ -20,6 +20,13 @@ Button.Feature: §l§aTính Năng
 Button.Coin: §l§aMua Bằng §cCoin (D-Coin)
 Button.Money: §l§aMua Bằng §6Money (D-Money)
 
+Button.Rank.Civilian: Civilian
+Button.Rank.Soldiers: Soldiers
+Button.Rank.LandLords: LandLords
+Button.Rank.Warden: Warden
+Button.Rank.Captain: Captain
+Button.Rank.General: General
+
 # Cost (Money)
 
 Cost.Money.Rank.Civilian: 50

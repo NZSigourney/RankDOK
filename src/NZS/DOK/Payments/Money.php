@@ -3,12 +3,14 @@
 namespace NZS\DOK\Payments;
 
 use _64FF00\PurePerms\PurePerms;
+use JetBrains\PhpStorm\Pure;
 use NZS\DOK\Main;
 use NZS\DOK\UI\UIform;
 use onebone\economyapi\EconomyAPI;
 use onebone\pointapi\PointAPI;
 use pocketmine\Player;
 use jojoe7777\FormAPI;
+use pocketmine\plugin\Plugin;
 use pocketmine\Server;
 
 class Money
@@ -41,19 +43,21 @@ class Money
         return null;
     }
 
-    public function getEconomyAPI(): EconomyAPI
+    public function getEconomyAPI(): Plugin
     {
-        return $this->EconomyAPI;
+        $API = Server::getInstance()->getPluginManager()->getPlugin("EconomyAPI");
+        return $API;
     }
 
-    public function getForm(): UIform
+    #[Pure] public function getForm(): UIform
     {
-        return $this->UIform;
+        return UIform::getInstance();
     }
 
-    public function onPurePerms(): PurePerms
+    public function onPurePerms(): Plugin
     {
-        return $this->pp;
+        $pure = Server::getInstance()->getPluginManager()->getPlugin("PurePerms");
+        return $pure;
     }
 
     public function getRankName(Player $player)
@@ -64,24 +68,31 @@ class Money
     public function Money($player)
     {
         $a = Server::getInstance()->getPluginManager()->getPlugin("FormAPI");
-        $f = $a->createSimpleForm(function (Player $player, ?array $data = null) {
+        $f = $a->createSimpleForm(function (Player $player, $data) {
+            if ($data == null) {
+                return $this->getForm()->formOpen($player);
+            }
+
             switch ($data) {
                 case 0:
-                    $this->level1($player);
+                    $this->getForm()->formOpen($player);
                     break;
                 case 1:
-                    $this->level2($player);
+                    $this->level1($player);
                     break;
                 case 2:
-                    $this->level3($player);
+                    $this->level2($player);
                     break;
                 case 3:
-                    $this->level4($player);
+                    $this->level3($player);
                     break;
                 case 4:
-                    $this->level5($player);
+                    $this->level4($player);
                     break;
                 case 5:
+                    $this->level5($player);
+                    break;
+                case 6:
                     $this->level6($player);
                     break;
             }
@@ -89,12 +100,12 @@ class Money
         $f->setTitle($this->getMain()->getCfs()->getRs("title.UI"));
         $f->setContent($this->getMain()->getServer()->getMotd() . "Chọn rank kế tiếp");
         $f->addButton($this->getMain()->getCfs()->getRs("Button.exit"), 0, $this->getMain()->getCfs()->getRs("URL.IMAGE.EXIT"));
-        $f->addButton($this->getMain()->getCfs()->getRs("Button.Rank.1"), 1, $this->getMain()->getCfs()->getRs("URL.IMAGE.RANK.1"));
-        $f->addButton($this->getMain()->getCfs()->getRs("Button.Rank.2"), 2, $this->getMain()->getCfs()->getRs("URL.IMAGE.RANK.2"));
-        $f->addButton($this->getMain()->getCfs()->getRs("Button.Rank.3"), 3, $this->getMain()->getCfs()->getRs("URL.IMAGE.RANK.3"));
-        $f->addButton($this->getMain()->getCfs()->getRs("Button.Rank.4"), 4, $this->getMain()->getCfs()->getRs("URL.IMAGE.RANK.4"));
-        $f->addButton($this->getMain()->getCfs()->getRs("Button.Rank.5"), 5, $this->getMain()->getCfs()->getRs("URL.IMAGE.RANK.5"));
-        $f->addButton($this->getMain()->getCfs()->getRs("Button.Rank.6"), 6, $this->getMain()->getCfs()->getRs("URL.IMAGE.RANK.6"));
+        $f->addButton($this->getMain()->getCfs()->getRs("Button.Rank.Civilian"), 1, $this->getMain()->getCfs()->getRs("URL.IMAGE.RANK.1"));
+        $f->addButton($this->getMain()->getCfs()->getRs("Button.Rank.Soldiers"), 2, $this->getMain()->getCfs()->getRs("URL.IMAGE.RANK.2"));
+        $f->addButton($this->getMain()->getCfs()->getRs("Button.Rank.LandLords"), 3, $this->getMain()->getCfs()->getRs("URL.IMAGE.RANK.3"));
+        $f->addButton($this->getMain()->getCfs()->getRs("Button.Rank.Warden"), 4, $this->getMain()->getCfs()->getRs("URL.IMAGE.RANK.4"));
+        $f->addButton($this->getMain()->getCfs()->getRs("Button.Rank.Captain"), 5, $this->getMain()->getCfs()->getRs("URL.IMAGE.RANK.5"));
+        $f->addButton($this->getMain()->getCfs()->getRs("Button.Rank.General"), 6, $this->getMain()->getCfs()->getRs("URL.IMAGE.RANK.6"));
         $f->sendToPlayer($player);
     }
 
@@ -108,13 +119,13 @@ class Money
 
             switch ($data) {
                 case 1:
-                    $this->getEconomyAPI()->reduceMoney($player->getName(), $this->getMain()->getCfs()->getRs("Cost.Money.Rank.Civilian"));
                     $rank = $this->getRankName($player);
                     //$lvs = $this->getMain()->getCfs()->getLevelConfig($player);
                     if ($rank == "Civilian" || $rank == "Soldiers" || "LandLord" || $rank == "Warden" || $rank == "Captain" || $rank == "General" || $rank == "Kings") {
                         $player->sendMessage(Server::getInstance()->getMotd() . $this->getMain()->getCfs()->getRs("Invalid.Message"));
                     } else {
-                        $player->sendMessage(Server::getInstance()->getMotd() . "§b Taken§c " . $this->getMain()->getCfs()->getRs("Cost.Money.Rank.Civilian") . "§b From your vault!");
+                        $this->getEconomyAPI()->reduceMoney($player->getName(), $this->getMain()->getCfs()->getRs("Cost.Coin.Rank.Civilian"));
+                        $player->sendMessage($this->getMain()->getCfs()->getRs("title.UI") . "§b Taken§c " . $this->getMain()->getCfs()->getRs("Cost.Coin.Rank.Civilian") . "§b From your vault!");
                         $this->onPurePerms()->setGroup($player, "Civilian");
                         $this->getMain()->getCfs()->setCfs($player->getName(), "Civilian", 1);
                     }
@@ -149,10 +160,10 @@ class Money
                     {
                         $player->sendMessage(Server::getInstance()->getMotd() . $this->getMain()->getCfs()->getRs("Invalid.Message"));
                     } else {
-                        $player->sendMessage(Server::getInstance()->getMotd() . "§b Taken§c " . $this->getMain()->getCfs()->getRs("Cost.Money.Rank.Soldiers") . "§b From your vault!");
-                        //$pp->setGroup($player, "villager");
-                        $this->getMain()->getCfs()->setCfs($player->getName(), "Soldiers", 2);
+                        $this->getEconomyAPI()->reduceMoney($player->getName(), $this->getMain()->getCfs()->getRs("Cost.Coin.Rank.Civilian"));
+                        $player->sendMessage($this->getMain()->getCfs()->getRs("title.UI") . "§b Taken§c " . $this->getMain()->getCfs()->getRs("Cost.Coin.Rank.Civilian") . "§b From your vault!");
                         $this->onPurePerms()->setGroup($player, "Soldiers");
+                        $this->getMain()->getCfs()->setCfs($player->getName(), "Soldiers", 1);
                     }
                     break;
                 case 2:

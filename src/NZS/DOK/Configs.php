@@ -18,6 +18,7 @@ class Configs
      */
     private array $cfsAll;
     //private Config $rs;
+    private Config $rs;
 
     public function __construct()
     {
@@ -28,7 +29,7 @@ class Configs
         $this->config = new Config($this->getMain()->getDataFolder() . "Rank.yml", Config::YAML);
         $this->cfsAll = $this->config->getAll();
         $this->getMain()->saveResource("Resources.yml");
-        //$this->rs = new Config($this->getMain()->getDataFolder() . "Resources.yml", Config::YAML);
+        $this->rs = new Config($this->getMain()->getDataFolder() . "Resources.yml", Config::YAML);
     }
 
     public function getMain(): ?Main
@@ -44,8 +45,8 @@ class Configs
         $this->config->save();
     }
 
-    public function setCfs(Player $player, $rank, int $level){
-        $this->config->set($player->getName(), ["Rank" => $rank, "Level" => $level]);
+    public function setCfs($player, $rank, int $level){
+        $this->config->set($player, ["Rank" => $rank, "Level" => $level]);
         $this->config->save();
     }
 
@@ -57,12 +58,11 @@ class Configs
 
     public function getRank(Player $player)
     {
-        $rank = $this->config->get($player->getName())["Rank"];
-        return $rank;
+        return $this->config->get($player->getName())["Rank"];
     }
 
-    public function getRs(string $str){
-        return $this->getMain()->getConfig()->get($str);
+    public function getRs(String $str){
+        return $this->rs->get($str);
     }
 
     /**public function removeCfs(Player $player): void{
